@@ -1,137 +1,116 @@
+console.log("merhaba");
+
 const numberButtons = document.querySelectorAll('[data-number]')
 const operationButtons = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
 const deleteButton = document.querySelector('[data-delete]')
-const previousOperandTextElement = document.querySelector('[data-previous-operand]')
-const currentOperandTextElement = document.querySelector('[data-current-operand]')
+const counted = document.querySelector('countedValue')
+const counting = document.querySelector('countingValue')
 
-class Calculator {
-    constructor(previousOperandTextElement, currentOperandTextElement) {
-      this.previousOperandTextElement = previousOperandTextElement
-      this.currentOperandTextElement = currentOperandTextElement
-      this.clear()
-  }
+counting.forEach(item=>{
+  item.addEventListener('click',() =>{
+    if(item.value==="."){
+      if(!counting.innerHTML.includes(".")){
+        counting.innerHTML+=item}
+      }
+    else if (counting.innerHTML != "0"){
+      counting.innerHTML += item.value
+  }else if(counting.innerHTML === "0"){
+      counting.innerHTML = item.value
+}})
+}
+)
 
-  clear() {
+let firstNumber;
+let secondNumber;
+let operate;
+
+const addition = function(){
+    firstNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    operate = "add"
 }
 
-delete() {
+const subtract = function(){
+    firstNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    operate = "sub"
 }
 
-appendNumber(number) {
+const multiply = function(){
+    firstNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    operate = "mult"
 }
 
-chooseOperation(operation) {
+const divide = function(){
+    firstNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    operate = "dvd"
 }
 
-compute() {
+const percent = function(){
+    firstNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    operate = "per"
 }
 
-updateDisplay() {
-}
+substractBtn.addEventListener("click", subtract)
 
-clear() {
-    this.currentOperand = ''
-    this.previousOperand = ''
-    this.operation = undefined
-  }
+addBtn.addEventListener("click", addition)
 
-  const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
+multiplyBtn.addEventListener("click", multiply)
 
-  numberButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      calculator.appendNumber(button.innerText)
-      calculator.updateDisplay()
-    })
-  })
+divideBtn.addEventListener("click", divide)
 
-  appendNumber(number) {
-    if (number === '.' && this.currentOperand.includes('.')) return
-    this.currentOperand = this.currentOperand.toString() + number.toString()
-  }
+// equals
 
-  operationButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      calculator.chooseOperation(button.innerText)
-      calculator.updateDisplay()
-    })
-  })
-
-  chooseOperation(operation) {
-    if (this.currentOperand === '') return
-    if (this.previousOperand !== '') {
-      this.compute()
+const equals = function(){
+    secondNumber = counting.innerHTML
+    counting.innerHTML = "0"
+    
+    switch(operate){
+        case "add":
+            counting.innerHTML = (+firstNumber + +secondNumber)
+            break
+        case "sub":
+            counting.innerHTML = (+firstNumber - +secondNumber)
+            break
+        case "mult":
+            counting.innerHTML = (+firstNumber * +secondNumber)
+            break
+        case "dvd":
+            counting.innerHTML = (+firstNumber / +secondNumber)
+            break
     }
-    this.operation = operation
-    this.previousOperand = this.currentOperand
-    this.currentOperand = ''
-  }
 
-  equalsButton.addEventListener('click', button => {
-    calculator.compute()
-    calculator.updateDisplay()
-  })
 
-  compute() {
-    let computation
-    const prev = parseFloat(this.previousOperand)
-    const current = parseFloat(this.currentOperand)
-    if (isNaN(prev) || isNaN(current)) return
-    switch (this.operation) {
-      case '+':
-        computation = prev + current
-        break
-      case '-':
-        computation = prev - current
-        break
-      case '*':
-        computation = prev * current
-        break
-      case '÷':
-        computation = prev / current
-        break
-      default:
-        return
-    }
-    this.currentOperand = computation
-    this.operation = undefined
-    this.previousOperand = ''
-  }
-
-  delete() {
-    this.currentOperand = this.currentOperand.toString().slice(0, -1)
-  }
-
-  deleteButton.addEventListener('click', button => {
-    calculator.delete()
-    calculator.updateDisplay()
-  })
-
-  updateDisplay() {
-    this.currentOperandTextElement.innerText =
-      this.getDisplayNumber(this.currentOperand)
-    if (this.operation != null) {
-      this.previousOperandTextElement.innerText =
-        `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
-    } else {
-      this.previousOperandTextElement.innerText = ''
-    }
-  }
 }
 
-getDisplayNumber(number) {
-    const stringNumber = number.toString()
-    const integerDigits = parseFloat(stringNumber.split('.')[0])
-    const decimalDigits = stringNumber.split('.')[1]
-    let integerDisplay
-    if (isNaN(integerDigits)) {
-      integerDisplay = ''
-    } else {
-      integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
-    }
-    if (decimalDigits != null) {
-      return `${integerDisplay}.${decimalDigits}`
-    } else {
-      return integerDisplay
-    }
-  }
+assignBtn.addEventListener("click", equals)
+
+
+
+// delete & percent & clear
+
+const converter = function(){
+    counting.innerHTML = -(counting.innerHTML)
+}
+
+convertBtn.addEventListener("click", converter)
+
+
+
+const getPercent = function(){
+    counting.innerHTML /= 100
+}
+
+percentBtn.addEventListener("click", getPercent)
+
+const clear = function(){
+    counting.innerHTML = 0
+    firstVar = 0
+    secondVar = 0
+}
+
+deleteBtn.addEventListener("click", clear)

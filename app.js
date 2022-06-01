@@ -1,5 +1,3 @@
-console.log("merhaba");
-
 const numberButtons = document.querySelectorAll('[data-number]')
 const operationButtons = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
@@ -10,7 +8,7 @@ const divideButton = document.querySelector('[data-operation=divide]')
 const multiplyButton = document.querySelector('[data-operation=multply]')
 const subsButton = document.querySelector('[data-operation=subs]')
 const addButton = document.querySelector('[data-operation=addi]')
-const counted = document.querySelector('.countedValue')
+// const counted = document.querySelector('.countedValue')
 const counting = document.querySelector('.countingValue')
 
 numberButtons.forEach(item=>{
@@ -118,8 +116,3 @@ const clear = function(){
 
 deleteButton.addEventListener("click", clear)
 
-console.log(counting.innerHTML)
-
-if(equalsButton){
-    counted = +counting.innerHTML
-}

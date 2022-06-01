@@ -4,14 +4,20 @@ const numberButtons = document.querySelectorAll('[data-number]')
 const operationButtons = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
 const deleteButton = document.querySelector('[data-delete]')
-const counted = document.querySelector('countedValue')
-const counting = document.querySelector('countingValue')
+const minusButton = document.querySelector('[data-operation=plmn]')
+const percentButton = document.querySelector('[data-operation=percent]')
+const divideButton = document.querySelector('[data-operation=divide]')
+const multiplyButton = document.querySelector('[data-operation=multply]')
+const subsButton = document.querySelector('[data-operation=subs]')
+const addButton = document.querySelector('[data-operation=addi]')
+const counted = document.querySelector('.countedValue')
+const counting = document.querySelector('.countingValue')
 
-counting.forEach(item=>{
+numberButtons.forEach(item=>{
   item.addEventListener('click',() =>{
     if(item.value==="."){
       if(!counting.innerHTML.includes(".")){
-        counting.innerHTML+=item}
+        counting.innerHTML+=item.value}
       }
     else if (counting.innerHTML != "0"){
       counting.innerHTML += item.value
@@ -20,7 +26,7 @@ counting.forEach(item=>{
 }})
 }
 )
-
+;
 let firstNumber;
 let secondNumber;
 let operate;
@@ -46,7 +52,7 @@ const multiply = function(){
 const divide = function(){
     firstNumber = counting.innerHTML
     counting.innerHTML = "0"
-    operate = "dvd"
+    operate = "divd"
 }
 
 const percent = function(){
@@ -55,13 +61,10 @@ const percent = function(){
     operate = "per"
 }
 
-substractBtn.addEventListener("click", subtract)
-
-addBtn.addEventListener("click", addition)
-
-multiplyBtn.addEventListener("click", multiply)
-
-divideBtn.addEventListener("click", divide)
+addButton.addEventListener("click", addition)
+subsButton.addEventListener("click", subtract)
+multiplyButton.addEventListener("click", multiply)
+divideButton.addEventListener("click", divide)
 
 // equals
 
@@ -79,7 +82,7 @@ const equals = function(){
         case "mult":
             counting.innerHTML = (+firstNumber * +secondNumber)
             break
-        case "dvd":
+        case "divd":
             counting.innerHTML = (+firstNumber / +secondNumber)
             break
     }
@@ -87,17 +90,17 @@ const equals = function(){
 
 }
 
-assignBtn.addEventListener("click", equals)
+equalsButton.addEventListener("click", equals)
 
 
 
 // delete & percent & clear
 
-const converter = function(){
+const negativeConverter = function(){
     counting.innerHTML = -(counting.innerHTML)
 }
 
-convertBtn.addEventListener("click", converter)
+minusButton.addEventListener("click", negativeConverter)
 
 
 
@@ -105,12 +108,18 @@ const getPercent = function(){
     counting.innerHTML /= 100
 }
 
-percentBtn.addEventListener("click", getPercent)
+percentButton.addEventListener("click", getPercent)
 
 const clear = function(){
     counting.innerHTML = 0
-    firstVar = 0
-    secondVar = 0
+    firstNumber = 0
+    secondNumber = 0
 }
 
-deleteBtn.addEventListener("click", clear)
+deleteButton.addEventListener("click", clear)
+
+console.log(counting.innerHTML)
+
+if(equalsButton){
+    counted = +counting.innerHTML
+}
